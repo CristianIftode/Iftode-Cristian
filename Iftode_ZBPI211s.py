@@ -112,7 +112,6 @@ class Student:
             return "YES"
         else:
             return "NO"
-    #magic
     def __add__(self, other):
         return (self.__name + " is friends with " + other.__name)
     
