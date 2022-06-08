@@ -1,318 +1,342 @@
+from io import IOBase
+import json
+from statistics import mean
 
 def fact(x):
+    if type(x) != int:
+        return "Ошибка! Число должно быть целым!"
     if x == 1:
-        return x
-    else:
-        return x*fact(x-1)
-    pass
-
-print (fact(10))
+        return 1
+    return fact(x-1) * x
 
 
-li = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  return 1 if (x < 1) else x*fact(x-1)
 
 def filter_even(li):
-    a = list(filter(lambda x: x % 2 == 0, li))
-    return a
-    pass
+    if type(li) != list:
+        return "Ошибка! Параметром функции должен быть список!"
+    if len(li) == 0:
+        return "Ошибка! Список пустой!"
+    if len(list(filter(lambda x: type(x) != int, li))) != 0:
+        return "Ошибка! В списке присутствуют значения, не соотвествующие целочисленному типу!"
+    return list(filter(lambda x: x % 2 == 0, li)) 
 
-print(filter_even(li))
 
-L = [1, 2, 3, 4]
-  return list(filter(lambda x: x % 2 == 0,li))
+
 
 def square(li):
-    a = list(map(lambda x: x**2, li))
-    return a
-    pass
+    if type(li) != list:
+        return "Ошибка! Параметром функции должен быть список!"
+    if len(li) == 0:
+        return "Ошибка! Список пустой!"
+    if len(list(filter(lambda x: type(x) != int, li))) != 0:
+        return "Ошибка! В списке присутствуют значения, не соотвествующие целочисленному типу!"
+    return list(map(lambda x: x ** 2, li))
 
-print (square(L))
-
-li = [2, 5, 7, 9, 11, 17, 222]
-element = 11
 
 
 def bin_search(li, element):
-    first = 0
-    last = len(li) - 1
-    index = -1
-    while (first <= last) and (index == -1):
-        mid = (first + last) // 2
-  return list(map(lambda x: x**2,li))
 
-def bin_search(li, element): 
-    first = 0 
-    last = len(li)-1 
-    i = -1 
-    while (first<=last) and (i==-1):
-        mid = (first+last)//2
-        if li[mid] == element:
-            index = mid
-            i=mid
+    if type(element) != int and type(element) != float:
+        return "Ошибка! Второй параметр функции должен быть числом!"
+    if type(li) != list:
+        return "Ошибка! Первый параметр функции должен быть списком!"
+    if len(li) == 0:
+        return "Ошибка! Первый параметр (список) пустой!"
+    if len(list(filter(lambda x: type(x) != int and type(x) != float, li))) != 0:
+        return "Ошибка! В списке присутствуют не числовые значения!"
+    if(li != sorted(li)):
+        return "Ошибка! Список не отсортирован по возрастанию!"         
+
+    low = -1
+    high = len(li)
+
+    while high > low+1:
+        mid = (low+high)//2
+
+        if(li[mid] == element):
+            return mid
+
+        if(li[mid] < element):
+            low = mid 
         else:
-            if element < li[mid]:
-                last = mid - 1
-            if element<li[mid]:
-                last=mid-1
-            else:
-                first = mid + 1
-    return index
+            high = mid 
+            
+    if(li[mid] != element):
+        return -1
 
 
-print(bin_search(li, element))
-
-import re
-
-st = input("Введите слово: ")
-nst = re.sub(r'[^\w\s]','', st)
-nnst = nst.replace(" ", "")
-                first=mid+1
-    return i
 
 def is_palindrome(string):
-    letters = list(string)
-    palin = True
-    string = ''.join(filter(str.isalpha, string)).lower()
-    i = 0
-    while len(letters) > 0 and palin:
-        if letters[0] != letters[(len(letters) - 1)]:
-            palin = False
+    if type(string) != str:
+        return "Ошибка! Параметр функции должен быть строкой!"
+    if len(string) == 0:
+        return "Ошибка! Параметр функции не должен быть пустой строкой!"
+    string = string.replace(" ", "")
+    string = string.lower()
+    string = "".join(list(filter(lambda x: x.isalpha(), string)))
+    left = 0
+    right = len(string)-1 
+    count_equality = 0
+    while left != right:
+        if(string[left] == string[right]):
+            count_equality+=1
         else:
-            letters.pop(0)
-            if len(letters) > 0:
-                letters.pop((len(letters) - 1))
-    return palin
-if is_palindrome(nnst.lower()):
-    print ("YES")
-else:
-    print("No")
-
-
-
-lst = []
-    j = len(string)-1
-    pal = True
-    while (i<j) and pal:
-        if(string[i]!=string[j]):
-            pal = False
-        i += 1
-        j -= 1
-    return pal
-operations = {
-    '+': lambda x, y: x + y,
-    '*': lambda x, y: x * y,
-    '-': lambda x, y: x - y,
-    '%': lambda x, y: x % y,
-    '//': lambda x, y: x // y,
-    '**': lambda x, y: x ** y,
-}
-
-def resolve(op, a, b): 
-    return operations[op](a, b) 
+            return "NO"
+        if left > right:
+            break
+        left+=1
+        right-=1
+    return "YES"
+        
+ 
 
 def calculate(path2file):
-    result="" 
-    with open(path2file, mode='r') as f:
-        while(True):
-            line = f.readline()
-            if not line:
-                break
-            op=line.split()[0]
-            a =int(line.split()[1])
-            b =int(line.split()[2])
-            if result=="":
-                result=str(resolve(op,a,b))
-            else:
-                result=result+","+str(resolve(op,a,b))
-        f.close()
-    return result
 
-def substring_slice(path2file_1,path2file_2):
-    result=""
-    with open(path2file_1, mode='r') as f1:
-        with open(path2file_2,mode='r') as f2:
-            while(True):
-                line1 = f1.readline()
-                line2 = f2.readline()
-                if not line1 or not line2:
-                    break
-                i=int(line2.split()[0])
-                j=int(line2.split()[1])
-                if result=="":
-                    result=line1[i:j+1] 
-                else:
-                    result=result+" "+line1[i:j+1]
-            f1.close()
-        f2.close()
-    return result
+    if type(path2file) != str:
+        return "Ошибка! Параметр функции должен быть строкой!"
+    if len(path2file) == 0:
+        return "Ошибка! Параметр функции не должен быть пустой строкой!"
 
-    return int(eval(f'{int(path2file[1])}{path2file[0]}{int(path2file[2])}'))
+    file = open(path2file,'r')
 
-with open('test_input_file_1.txt', 'r') as FILE:
-    for row in FILE:
+    if not isinstance(file, IOBase): 
+        return "Ошибка! Открыт должен быть файл!"
 
-        lst_1 = row.split()
-        lst.append(calculate(lst_1))
+    if not file.name.endswith(".txt"):
+        return "Ошибка! Файл должен быть с расширением TXT!"
+        
+    operations_list = ["+", "-", "*", "//", "%", "**"]  
+    result_list = []
 
-with open('test_output_file_1.txt', 'w') as FILE:
-    for i in range(len(lst)):
-        if i != len(lst) - 1:
-            FILE.write(str(lst[i]) + ', ')
-        else:
-            FILE.write(str(lst[i]))
+    count_iter = 1
+
+    for _str in file.readlines():
+
+        split_list = _str.split("    ")
+
+        if len(split_list) != 3:
+            return "Ошибка файл не соответствует формату, указанному в ТЗ"
+
+        if not split_list[0] in operations_list:
+            return "Ошибка! Математическая операция не найдена в строке " + str(count_iter)
+
+        try:
+            check = int(split_list[1])
+        except:
+             return "Ошибка! Значение №1 не является целым числом в строке " + str(count_iter)
+
+        try:
+            check = int(split_list[2])
+        except:
+             return "Ошибка! Значение №2 не является целым числом в строке " + str(count_iter)          
 
 
+        result_operate = eval(split_list[1] + split_list[0] + split_list[2])
+        result_list.append(str(result_operate))
 
-lst = []
+        count_iter+=1
+
+
+    if count_iter == 1:
+        return "Ошибка! Файл пуст!"
+
+    result_str = ",".join(result_list)
+
+    f_result = open('output1.txt','w')
+    f_result.write(result_str)
+    f_result.close()
+
+    file.close()
+
+    return result_str
+
 
 
 def substring_slice(path2file_1, path2file_2):
 
-    a = int(path2file_2[0])
-    b = list(str(path2file_1[0]))
-    l = []
-    while a <= int(path2file_2[1]):
-        l.append(str(b[a]))
-        a = a + 1
-    return l
+    if type(path2file_1) != str:
+        return "Ошибка! Параметр функции №1 должен быть строкой!"
+    if len(path2file_1) == 0:
+        return "Ошибка! Параметр функции №1 не должен быть пустой строкой!"
 
-with open('test_import_file_2_1.txt', 'r') as FILE1, open('test_import_file_2_2.txt', 'r') as FILE2:
-    for row in FILE1:
-        lst_1 = row.split()
-        lst_2 = FILE2.readline().split()
-        lst.append(str(''.join(substring_slice(lst_1, lst_2))))
+    if type(path2file_2) != str:
+        return "Ошибка! Параметр функции №2 должен быть строкой!"
+    if len(path2file_2) == 0:
+        return "Ошибка! Параметр функции №2 не должен быть пустой строкой!"
 
-with open('test_output_file_2.txt', 'w') as FILE:
-    for i in range(len(lst)):
-        if i != len(lst) - 1:
-            FILE.write(str(lst[i]) + ' ')
-        else:
-            FILE.write(str(lst[i]))
+    file1 = open(path2file_1,'r')
+    file2 = open(path2file_2,'r')
+
+    if not isinstance(file1, IOBase): 
+        return "Ошибка! Открыт должен быть файл!"
+    if not isinstance(file2, IOBase): 
+        return "Ошибка! Открыт должен быть файл!"
+
+    if not file1.name.lower().endswith(".txt"):
+        return "Ошибка! Файл №1 должен быть с расширением TXT!"
+    if not file2.name.lower().endswith(".txt"):
+        return "Ошибка! Файл №2 должен быть с расширением TXT!"
+        
+    str_list_file1 = file1.readlines()
+    str_list_file2 = file2.readlines() 
+
+    if len(str_list_file1) == 0:
+        return "Ошибка! Файл №1 пуст!"
+    if len(str_list_file2) == 0:
+        return "Ошибка! Файл №2 пуст!"
+
+    if len(str_list_file1) != len(str_list_file2):
+        return "Ошибка! Количество строк в файлах не совпадает!"
+
+    result_list = []
+    count_iter = 0
+
+    for _str in str_list_file1:
+
+        split_list = str_list_file2[count_iter].split(" ")
+
+        if len(split_list) != 2:
+            return "Ошибка файл №2 не соответствует формату, указанному в ТЗ"
+
+        try:
+            check = int(split_list[0])
+            if(check<0):
+                raise ""
+        except:
+             return "Ошибка! Значение №1 в файле №2 не является целым положительным числом (т.е. индексом) в строке " + str(count_iter + 1)
+
+        try:
+            check = int(split_list[1])
+            if(check<0):
+                raise ""
+        except:
+             return "Ошибка! Значение №2 в файле №2 не является целым положительным числом (т.е. индексом) в строке " + str(count_iter + 1)          
+
+        if int(split_list[0]) > int(split_list[1]):
+            return "Ошибка! Значение №1 должно быть меньше или равно значения №2 в файле №2 в строке " + str(count_iter + 1) 
+
+        if int(split_list[0]) > len(_str):
+            return "Ошибка! Значение №1 в файле №2 должно быть меньше длины строки в файле №1. Строка: " + str(count_iter + 1)
+        if int(split_list[1]) > len(_str):
+            return "Ошибка! Значение №2 в файле №2 должно быть меньше длины строки в файле №1. Строка: " + str(count_iter + 1)
+
+
+        result_operate = _str[int(split_list[0]):int(split_list[1]) + 1]
+        result_list.append(str(result_operate))
+
+        count_iter+=1
 
 
 
-import re
-import json
-a = "NOTiFICaTiON"
+    result_str = " ".join(result_list)
 
-with open('periodic_table.json', encoding='utf-8') as f:
-     d = json.load(f)
+    f_result = open('output2.txt','w')
+    f_result.write(result_str)
+    f_result.close()
+
+    file1.close()
+    file2.close()
+
+    return result_str
+
 
 
 def decode_ch(sting_of_elements):
-    lst = list(sting_of_elements)
-    l = []
-    i = 0
-    while i < len(lst):
-        if i < len(lst) - 1:
-            if lst[i].isupper() and lst[i + 1].isupper():
-                l.append(lst[i])
-                i = i + 1
 
-            else:
-                l.append(lst[i] + lst[i + 1])
-                i = i + 2
-        else:
-            l.append(lst[i])
-            i = i + 1
-    st = ""
-    for i in range(len(l)):
-        st = st + d[l[i]]
-    return st
-    pass
+    if type(sting_of_elements) != str:
+        return "Ошибка! Параметр функции должен быть строкой!"
+    if len(sting_of_elements) == 0:
+        return "Ошибка! Параметр функции не должен быть пустой строкой!"
+
+    try:
+        periodic_table = json.load(open('periodic_table.json',"r", encoding = "utf-8"))
+    except:
+        return "Ошибка чтения JSON"
+
+    check   = 0 
+    list_ch = [] 
+    str_ch  = ""
+    count = 1
+    for ch in sting_of_elements:
+
+        if ch.isupper():
+            check += 1
+            if check == 2:
+                list_ch.append(str_ch)
+                check = 1
+                str_ch = ""
+        str_ch += ch
+        if count == len(sting_of_elements):
+            list_ch.append(str_ch)    
+        count += 1
+
+    result_str_ch = ""
+    for ch in list_ch:
+        try:
+            result_str_ch += periodic_table.get(ch)
+        except:
+            return "Элемент " + ch + " не найден в периодической таблице!"
+
+    return result_str_ch 
 
 
-
-print(decode_ch(a))
-
-
-
-from statistics import mean
-    result=""
-    with open('periodic_table.json', 'r', encoding='utf-8') as f:
-        periodic_table = json.load(f)
-        f.close()
-    list_of_elements = re.findall('[A-Z][a-z]*', sting_of_elements)
-    for e in list_of_elements:
-        result+=periodic_table.get(e)
-    return result
 
 class Student:
-  def __init__(self, name, surname):
-    self.name = name
-    self.surname = surname
-    self.grades = []
-    self.fullname = name + " " + surname
-  def grades(self):
-    print ("Hello, I am Student")
-  def mean_grade(self):
-    m = mean(self.grades)
-    return m
-  def is_otlichnik(self):
-    m = mean(self.grades)
-    if m >= 4.5:
-      print("YES")
-    else:
-      print("NO")
-  def __add__(self, otherName):
-    return self.name + " is friends with " + otherName.name
-  def __str__(self):
-    return "{}".format(self.fullname)
-  pass
+    def __init__(self, name, surname, grades = [3,4,5]):
 
-newstud = Student('OLeg', 'Olegov')
-newstud_2 = Student('Ivan', 'Ivanov')
-newstud.grades = [4,5,5,5]
-newstud.is_otlichnik()
+        if type(name) != str or type(surname) != str:
+            print("При инициализации класса произошла ошибка! На вход необходимо подавать name и surname строкового типа!")
+            return
 
-print(newstud + newstud_2)
+        if type(grades) != list:
+            print("При инициализации класса произошла ошибка! На вход необходимо подавать grades типа список!")
+            return
 
-print(newstud)
-    def __init__(self, name, surname, grades=[3,4,5]):
-        self.__name = name
-        self.__surname = surname
-        self.__fullname = name + ' ' + surname
-        self.__grades = grades
-
+        if len(grades) == 0:
+            print("При инициализации класса произошла ошибка! Список оценок grades не может быть пустым!")
+            return
+            
+        self.name     = name 
+        self.surname  = surname
+        self.fullname = name + " " + surname
+        self.grades   = grades
+    
     def greeting(self):
-        return ("Hello, I am Student")
+        return "Hello, I am Student"
 
     def mean_grade(self):
-        return sum(self.__grades)/len(self.__grades)
+        return round(mean(self.grades), 2)
 
     def is_otlichnik(self):
-        if self.mean_grade()>=4.5:
+        if self.mean_grade() >= 4.5:
             return "YES"
         else:
             return "NO"
-    #magic
+
     def __add__(self, other):
-        return (self.__name + " is friends with " + other.__name)
+        if isinstance(other, Student):
+            return self.name + " is friends with " + other.name
+        else:
+            return "Второй объект не является экземпляром класса Student!"
 
     def __str__(self):
-        return self.__fullname
+        if hasattr(self, "fullname"): 
+            return self.fullname
+      
+
 
 class MyError(Exception):
-
-    def __init__(self, msg):
-        if msg:
-            self.message = msg[0]
+    def __init__(self, msg = ""):
+        if type(msg) != str:
+            self.msg = "При инициализации класса произошла ошибка! На вход необходимо подавать строку!"
+            return
+        if msg == "": 
+            self.msg = None
         else:
-            self.message = None
-
-        self.__msg = msg
-
-        super(MyError, self).__init__(msg)
+            self.msg = msg
 
     def __str__(self):
-        print('Вызов ошибки')
-        return 'Мой класс исключений, {0} '.format(self.message)
-
-err = MyError('У нас ошибка')
-
-raise(err)
-        return self.__msg
-
-    def get_msg(self):
-        return self.__msg
+        if self.msg != None:
+            return "MyError, " + self.msg 
+        else:
+            return "Вызван класс исключений MyError"
